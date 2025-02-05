@@ -58,8 +58,8 @@ import {
   TweetV2UsageResult,
   CommunityV2Result,
   CommunitiesV2Result,
-  CommunityByIDV2Params,
   CommunitySearchV2Params,
+  CommunityV2FieldsParams,
 } from '../types';
 import {
   TweetSearchAllV2Paginator,
@@ -884,7 +884,7 @@ export default class TwitterApiv2ReadOnly extends TwitterApiSubClient {
    * Returns a variety of information about a single Community specified by ID.
    * https://docs.x.com/x-api/communities/communities-lookup-by-community-id
    */
-  public community(communityId: string, options: Partial<CommunityByIDV2Params> = {}) {
+  public community(communityId: string, options: Partial<CommunityV2FieldsParams> = {}) {
     return this.get<CommunityV2Result>('communities/:id', options, { params: { id: communityId } });
   }
 
@@ -892,7 +892,7 @@ export default class TwitterApiv2ReadOnly extends TwitterApiSubClient {
    * Search for Communities based on keywords.
    * https://docs.x.com/x-api/communities/search-communities
    */
-  public searchCommunities(query: string, options: Partial<CommunitySearchV2Params> = {}) {
-    return this.get<CommunitiesV2Result>('communities/search', { query, ...options });
+  public searchCommunities(options: CommunitySearchV2Params) {
+    return this.get<CommunitiesV2Result>('communities/search', options as Partial<CommunitySearchV2Params>);
   }
 }
